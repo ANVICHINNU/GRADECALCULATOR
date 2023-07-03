@@ -1,0 +1,266 @@
+package oops;
+
+import java.awt.*;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
+import javax.swing.*;
+import java.awt.event.*;
+
+class IAException extends Exception {
+	public String toString() {
+		return "Ivalid IA marks";
+	}
+}
+
+class SeeException extends Exception {
+	public String toString() {
+		return "Ivalid IA marks";
+	}
+}
+
+class ctaException extends Exception {
+	public String toString() {
+		return "Ivalid cta marks";
+	}
+}
+
+class cieException extends Exception {
+	public String toString() {
+		return "Student Detained cannot write SEE ";
+	}
+}
+
+class Grade extends JFrame implements ActionListener {
+	Container contentPane;
+	JButton b;
+	JPanel p, p1, p2, p3, p4, p5, pq, p6, pb, p7;
+	JLabel l, l1, txt1, txt2, txt3, txt4, txt5, tt, g;
+	JTextField t, t1, t2, t3, t4;
+
+	public Grade(String title) {
+		super(title);
+
+		Font font = new Font("Arial", Font.BOLD, 18);
+
+		pq = new JPanel();
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+
+		l = new JLabel();
+		pq.setBorder(border);
+		pq.setBounds(100, 25, 250, 50);
+		l.setText("GRADE CALCULATOR");
+		l.setFont(font);
+		pq.add(l);
+
+		p = new JPanel();
+		p.setBorder(border);
+		p.setBackground(Color.LIGHT_GRAY);
+		p.setBounds(75, 100, 300, 25);
+		txt1 = new JLabel("Enter 1st IA marks:");
+		t = new JTextField(5);
+		p.add(txt1);
+		p.add(t);
+
+		p1 = new JPanel();
+		p1.setBorder(border);
+		p1.setBackground(Color.LIGHT_GRAY);
+		p1.setBounds(75, 130, 300, 25);
+		txt2 = new JLabel("Enter 2nd IA marks:");
+		t1 = new JTextField(5);
+		p1.add(txt2);
+		p1.add(t1);
+
+		p2 = new JPanel();
+		p2.setBorder(border);
+		p2.setBackground(Color.LIGHT_GRAY);
+		p2.setBounds(75, 160, 300, 25);
+		txt3 = new JLabel("Enter 3rd IA marks:");
+		t2 = new JTextField(5);
+		p2.add(txt3);
+		p2.add(t2);
+
+		p3 = new JPanel();
+		p3.setBorder(border);
+		p3.setBackground(Color.LIGHT_GRAY);
+		p3.setBounds(75, 190, 300, 25);
+		txt4 = new JLabel("Enter CTA marks:");
+		t3 = new JTextField(5);
+		p3.add(txt4);
+		p3.add(t3);
+
+		p4 = new JPanel();
+		p4.setBorder(border);
+		p4.setBackground(Color.LIGHT_GRAY);
+		p4.setBounds(75, 220, 300, 25);
+		txt5 = new JLabel("Enter SEE marks:");
+		t4 = new JTextField(5);
+		p4.add(txt5);
+		p4.add(t4);
+
+		pb = new JPanel();
+		pb.setBounds(100, 260, 250, 50);
+		b = new JButton("Calculate");
+		b.addActionListener(this);
+		b.setPreferredSize(new Dimension(100, 25));
+		pb.add(b);
+
+		p5 = new JPanel();
+		p5.setBorder(border);
+		p5.setBounds(75, 310, 300, 25);
+		tt = new JLabel("Total Marks:");
+		p5.add(tt);
+
+		p6 = new JPanel();
+		p6.setBorder(border);
+		p6.setBounds(75, 340, 300, 25);
+		g = new JLabel("Grade:");
+		p6.add(g);
+		p7 = new JPanel();
+		p7.add(p6);
+
+		this.add(pq);
+		this.add(p);
+		this.add(p1);
+		this.add(p2);
+		this.add(p3);
+		this.add(p4);
+		this.add(pb);
+		this.add(p5);
+		this.add(p6);
+		this.add(p7);
+
+	}
+
+	void check(int ia) {
+		try {
+			if (ia < 0 || ia > 20) {
+				throw new IAException();
+			}
+		} catch (IAException iae) {
+			JOptionPane.showMessageDialog(this, "entered IA marks is invalid");
+			System.exit(EXIT_ON_CLOSE);
+		}
+	}
+
+	void find(int cta) {
+		try {
+			if (cta < 0 || cta > 10) {
+				throw new ctaException();
+			}
+		} catch (ctaException ctae) {
+			JOptionPane.showMessageDialog(this, "entered CTA marks is invalid");
+			System.exit(EXIT_ON_CLOSE);
+		}
+	}
+
+	void check1(int cie) {
+		try {
+			if (cie < 20) {
+				throw new cieException();
+			}
+		} catch (cieException ce) {
+			JOptionPane.showMessageDialog(this, "student detained cannot write SEE ");
+			System.exit(EXIT_ON_CLOSE);
+		}
+	}
+
+	void check2(int tlt) {
+		try {
+			if (tlt < 0 || tlt > 100) {
+				throw new SeeException();
+			}
+		} catch (SeeException se) {
+			JOptionPane.showMessageDialog(this, "Invalid SEE Marks");
+			System.exit(EXIT_ON_CLOSE);
+		}
+	}
+
+	int marks() {
+
+		if (t.getText().isEmpty() || t1.getText().isEmpty() || t2.getText().isEmpty() || t3.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "No marks entered.If the student is absent,enter Zero.");
+			System.exit(EXIT_ON_CLOSE);
+		}
+		int ia1 = Integer.parseInt(t.getText());
+		check(ia1);
+		int ia2 = Integer.parseInt(t1.getText());
+		check(ia2);
+		int ia3 = Integer.parseInt(t2.getText());
+		check(ia3);
+		int cta = Integer.parseInt(t3.getText());
+		find(cta);
+		int high = ia1 + ia2;
+		int m1 = ia2 + ia3;
+		int m2 = ia1 + ia3;
+
+		if (high < m1) {
+			high = m1;
+		}
+		if (high < m2) {
+			high = m2;
+		}
+		int cie;
+		cie = cta + high;
+		check1(cie);
+		int tlt = Integer.parseInt(t4.getText());
+		check2(tlt);
+		if (tlt % 2 != 0) {
+			tlt = tlt + 1;
+		}
+		int tltm;
+		tltm = cie + (tlt / 2);
+		if (tltm == 38 || tltm == 39) {
+			tltm = 40;
+		}
+
+		return tltm;
+
+	}
+
+	String Grade1() {
+		int tltm = marks();
+
+		int tlt = Integer.parseInt(t4.getText());
+		if (tlt < 38)
+			return "F";
+
+		if (tltm >= 90)
+			return "S";
+
+		else if (tltm >= 80)
+			return "A";
+
+		else if (tltm >= 70)
+			return "B";
+
+		else if (tltm >= 60)
+			return "C";
+
+		else if (tltm >= 50)
+			return "E";
+
+		else
+			return "F";
+
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		tt.setText("Total Marks: " + marks());
+		g.setText("Grade:" + Grade1());
+
+	}
+}
+
+public class GUIDemo {
+
+	public static void main(String[] args) {
+
+		JFrame f = new Grade("STUDENT GRADING SYSTEM");
+		Font font = new Font("Arial", Font.BOLD, 18);
+		f.setFont(font);
+
+		f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		f.setBounds(100, 100, 500, 500);
+		f.setVisible(true);
+	}
+}
